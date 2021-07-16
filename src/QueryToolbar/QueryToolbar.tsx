@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import QueryContext from '../QueryContext';
+import QueryContext from '../QueryProvider/QueryContext';
 
 export interface QueryToolbarProps
   extends React.HTMLAttributes<HTMLDivElement> {
