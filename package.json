@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/romainleduc/draft-js-wysiwyg.git"
+    "url": "git+https://github.com/romainleduc/react-query-list.git"
   },
   "author": "Romain LEDUC",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/romainleduc/draft-js-wysiwyg/issues"
+    "url": "https://github.com/romainleduc/react-query-list/issues"
   },
-  "homepage": "https://github.com/romainleduc/draft-js-wysiwyg#readme",
+  "homepage": "https://github.com/romainleduc/react-query-list#readme",
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
