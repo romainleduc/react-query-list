@@ -1,0 +1,58 @@
+{
+  "name": "@agencelafusee/react-query-list",
+  "version": "0.0.3",
+  "description": "React-query-list displays a list of records fetched from the API, and allows users to filter, sort, select, and paginate the records",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "webpack": "webpack",
+    "dev": "npm run webpack -- --mode development --watch",
+    "build": "npm run webpack -- --mode production",
+    "build-types": "tsc -d --emitDeclarationOnly --outDir types",
+    "format": "eslint --ext tsx --ext ts src --fix",
+    "lint": "eslint --ext tsx --ext ts src && tsc --noEmit",
+    "test": "yarn test:coverage",
+    "test:coverage": "jest src --coverage",
+    "test:coverage:ci": "jest src --ci --coverage",
+    "test:watch": "npm run test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/agencelafusee/react-query-list.git"
+  },
+  "author": "Romain LEDUC",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/agencelafusee/react-query-list/issues"
+  },
+  "homepage": "https://gitlab.com/agencelafusee/react-query-list#readme",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/react": "^17.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "lint-staged": "^11.0.1",
+    "path": "^0.12.7",
+    "prettier": "^2.3.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "typescript": "^4.3.5",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}
