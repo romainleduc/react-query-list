@@ -19,11 +19,11 @@ const useQueryList = (
     if (page !== 1) {
       setPage(1);
     }
+    refetch?.(filterValues || {}, pagination);
   }, [filterValues]);
 
   const setFilterValuesWithRefecth = (newFilterValues: { [key: string]: any }) => {
     setFilterValues(newFilterValues);
-    refetch?.(newFilterValues, pagination);
   }
 
   const setPageWithRefetch = (newPage: number) => {
