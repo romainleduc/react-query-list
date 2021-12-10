@@ -20,11 +20,13 @@ const QueryToolbar = ({
         userPermissions = [userPermissions];
       }
 
-      return userPermissions.some((userPermission: string) => permissions.indexOf(userPermission) >= 0);
+      return userPermissions.some(
+        (userPermission: string) => permissions.indexOf(userPermission) >= 0
+      );
     }
 
     return false;
-  }
+  };
 
   if (!permissions || hasPermissions(permissions)) {
     return <div {...other} />;

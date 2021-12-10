@@ -16,7 +16,7 @@ export interface PaginationPayload {
 
 const paginationReducer = (
   prevState: PaginationPayload,
-  nextState: Partial<PaginationPayload>,
+  nextState: Partial<PaginationPayload>
 ): PaginationPayload => {
   return {
     ...prevState,
@@ -38,7 +38,7 @@ export const defaultPagination = {
  *
  */
 const useQueryPagination = (
-  initialPagination: { perPage?: number; page?: number } = {},
+  initialPagination: { perPage?: number; page?: number } = {}
 ): PaginationHookResult => {
   const [pagination, setPagination] = useReducer(paginationReducer, {
     ...defaultPagination,

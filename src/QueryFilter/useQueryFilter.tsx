@@ -1,23 +1,24 @@
 import { useCallback, useState } from 'react';
+import { Filters } from '../QueryList/useQueryList';
 
 export interface QueryFilterHookResult {
-  filterValues: { [key: string]: any } | undefined;
-  setFilterValues: (newFilterValues: { [key: string]: any }) => void;
+  filterValues: Filters | undefined;
+  setFilterValues: (newFilterValues: Filters) => void;
 }
 
 const useQueryFilter = (
-  defaultFilters: { [key: string]: any } | undefined,
+  defaultFilters: Filters | undefined
 ): QueryFilterHookResult => {
   const [filterValues, setFilterValues] = useState(defaultFilters || {});
 
   const handleFilterValues = useCallback(
-    (newFilterValues: { [key: string]: any }): void => {
+    (newFilterValues: Filters): void => {
       setFilterValues({
         ...filterValues,
         ...newFilterValues,
       });
     },
-    [setFilterValues, filterValues],
+    [setFilterValues, filterValues]
   );
 
   return {
