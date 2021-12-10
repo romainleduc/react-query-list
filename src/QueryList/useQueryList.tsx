@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import useQueryFilter from '../QueryFilter/useQueryFilter';
 import usePagination, { PaginationPayload } from '../QueryPagination/useQueryPagination';
 
@@ -9,47 +8,20 @@ const useQueryList = (
     page: 1,
     perPage: 6,
   },
-  refetch?: (filters: Filters, pagination: PaginationPayload) => void,
   filters?: Filters,
 ) => {
   const { filterValues, setFilterValues } = useQueryFilter(filters);
   const { page, perPage, setPage, setPerPage } = usePagination(pagination);
 
-  useEffect(() => {
-    if (page !== 1) {
-      setPage(1);
-    }
-    refetch?.(filterValues || {}, pagination);
-  }, [filterValues]);
-
-  const setFilterValuesWithRefecth = (newFilterValues: { [key: string]: any }) => {
-    setFilterValues(newFilterValues);
-  }
-
-  const setPageWithRefetch = (newPage: number) => {
-    setPage(newPage);
-    refetch?.(filterValues || {}, {
-      page: newPage,
-      perPage,
-    });
-  }
-
-  const setPerPageWithRefetch = (newPerPage: number) => {
-    setPerPage(newPerPage);
-    refetch?.(filterValues || {}, {
-      page,
-      perPage: newPerPage,
-    });
-  }
-
   return {
     pagination: {
       page,
       perPage,
-      setPage: setPageWithRefetch,
-      setPerPage: setPerPageWithRefetch,
+      setPage,
+      setPerPage,
     },
-    filters: [filterValues, setFilterValuesWithRefecth],
+    queryFilterValues: filterValues,
+    setQueryFilterValues: setFilterValues,
   };
 };
 

@@ -9,21 +9,24 @@ interface QueryListContextType {
   //filtering
   filterValues?: Filters; // a dictionary of filter values, e.g. { title: 'lorem', nationality: 'fr' }
   setFilterValues?: any;
+  error?: any;
   //pagination
-  paginationMeta: PaginationMeta;
-  setPage?: (newPage: number) => void;
-  setPerPage?: (newPerPage: number) => void;
+  paginationMeta?: PaginationMeta;
+  setPage: (newPage: number) => void;
+  setPerPage: (newPerPage: number) => void;
+  refetch: (filters: Filters, pagination: {
+    page: number;
+    perPage: number;
+  }) => void;
 }
 
 const QueryListContext = React.createContext<QueryListContextType>({
+  refetch: () => {},
+  setPage: () => {},
+  setPerPage: () => {},
   items: null,
   loading: false,
-  paginationMeta: {
-    page: 0,
-    per_page: 0,
-    total: 0,
-    total_pages: 0,
-  },
+  error: null,
 });
 
 export default QueryListContext;

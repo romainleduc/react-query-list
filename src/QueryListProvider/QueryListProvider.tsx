@@ -10,53 +10,106 @@ export interface PaginationMeta {
   total_pages: number;
 }
 
-interface QueryListProviderProps {
-  items?: any,
-  error?: any;
+export interface ResponseValues {
+  items: any[];
+  paginationMeta?: PaginationMeta;
+  error: any;
   loading: boolean;
-  page?: number;
-  perPage?: number;
+  response: any;
+}
+
+interface QueryListProviderProps {
+  onQueryChange: (filters: Filters, pagination?: PaginationPayload) => void,
+  responseValues: ResponseValues;
+  filters?: Filters;
+  pagination?: PaginationPayload;
   children?: React.ReactNode;
   paginationDisabled?: boolean;
-  filters?: Filters;
-  refetch?: (filters: Filters, pagination: PaginationPayload) => void;
-  paginationMeta?: PaginationMeta;
+  refetch: (filters: Filters, pagination: PaginationPayload) => void;
 }
 
 const QueryListProvider = ({
+  onQueryChange,
   refetch,
-  items,
-  loading = false,
-  paginationMeta,
-  page = 1,
-  perPage = 25,
+  paginationDisabled,
+  responseValues,
+  pagination,
   filters = {},
   children,
 }: QueryListProviderProps) => {
-  const { filters: queryFilters, pagination } = useQueryList(
+  const { page, perPage } = pagination || { page: 1, perPage: 15 };
+  const { queryFilterValues, setQueryFilterValues, pagination: queryPagination } = useQueryList(
     {
       page,
       perPage,
     },
-    refetch,
     filters,
   );
+
+  const {
+    items,
+    loading,
+    error,
+    paginationMeta,
+  } = responseValues;
+
+  React.useEffect(() => {
+    if (page !== 1) {
+      setPage(1);
+    }
+  }, [queryFilterValues]);
+
+  const setPage = (newPage: number) => {
+    if (!paginationDisabled) {
+      queryPagination.setPage(newPage);
+      onQueryChange(
+        queryFilterValues || {},
+        {
+          page: newPage,
+          perPage,
+        },
+      );
+    }
+  }
+
+  const setPerPage = (newPerPage: number) => {
+    if (!paginationDisabled) {
+      queryPagination.setPerPage(newPerPage);
+      onQueryChange(
+        queryFilterValues || {},
+        {
+          page,
+          perPage: newPerPage,
+        },
+      );
+    }
+  }
+
+  const setFilterValues = (newFilterValues: Filters) => {
+    if (setQueryFilterValues) {
+      setQueryFilterValues(newFilterValues);
+      onQueryChange(
+        newFilterValues, !paginationDisabled ?
+        {
+          page: queryPagination.page,
+          perPage: queryPagination.perPage,
+        }: undefined
+      );
+    }
+  }
 
   return (
     <QueryListContext.Provider
       value={{
+        refetch,
         items,
         loading,
-        setPage: pagination.setPage,
-        setPerPage: pagination.setPerPage,
-        paginationMeta: {
-          page: paginationMeta?.page || 0,
-          per_page: paginationMeta?.per_page || 0,
-          total: paginationMeta?.total || 0,
-          total_pages: paginationMeta?.total_pages || 0,
-        },
-        filterValues: queryFilters[0],
-        setFilterValues: queryFilters[1],
+        error,
+        paginationMeta,
+        setPage,
+        setPerPage,
+        filterValues: queryFilterValues,
+        setFilterValues,
       }}
     >
       {children}
