@@ -2,30 +2,17 @@ import React from 'react';
 import QueryListContext from '../QueryList/QueryListContext';
 import useQueryList, { Filters } from '../QueryList/useQueryList';
 import { PaginationPayload } from '../QueryPagination/useQueryPagination';
-
-export interface PaginationMeta {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-}
-
-export interface ResponseValues {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  items: any[];
-  error: any;
-  response: any;
-  /* eslint-enable @typescript-eslint/no-explicit-any */
-  paginationMeta?: PaginationMeta;
-  loading: boolean;
-}
+import QueryProviderContext from '../QueryProvider/QueryProviderContext';
 
 interface QueryListProviderProps {
   onQueryChange: (filters: Filters, pagination?: PaginationPayload) => void;
-  responseValues: ResponseValues;
+  data: any[];
+  error: any;
+  response: any;
+  loading: boolean;
   filters?: Filters;
   pagination?: PaginationPayload;
-  children?: React.ReactNode;
+  children?: any;
   paginationDisabled?: boolean;
   refetch: (filters: Filters, pagination: PaginationPayload) => void;
 }
@@ -34,11 +21,14 @@ const QueryListProvider = ({
   onQueryChange,
   refetch,
   paginationDisabled,
-  responseValues,
+  data,
+  error,
+  loading,
   pagination,
   filters = {},
   children,
 }: QueryListProviderProps): JSX.Element => {
+  const { dataProvider } = React.useContext(QueryProviderContext);
   const { page, perPage } = pagination || { page: 1, perPage: 15 };
   const {
     queryFilterValues,
@@ -51,8 +41,6 @@ const QueryListProvider = ({
     },
     filters
   );
-
-  const { items, loading, error, paginationMeta } = responseValues;
 
   React.useEffect(() => {
     if (page !== 1) {
@@ -99,17 +87,21 @@ const QueryListProvider = ({
     <QueryListContext.Provider
       value={{
         refetch,
-        items,
+        items: data ? dataProvider.getItems(data): [],
+        paginationMeta: data ? dataProvider.getPaginationMeta(data): undefined,
         loading,
         error,
-        paginationMeta,
         setPage,
         setPerPage,
         filterValues: queryFilterValues,
         setFilterValues,
       }}
     >
-      {children}
+      {typeof children === 'function' ? (
+        <QueryListContext.Consumer>
+          {children}
+        </QueryListContext.Consumer>
+      ): children}
     </QueryListContext.Provider>
   );
 };

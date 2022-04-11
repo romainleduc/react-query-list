@@ -1,24 +1,25 @@
 import React from 'react';
-import QueryContext, { AuthProvider } from './QueryContext';
+import QueryProviderContext, { QueryProviderContextType } from './QueryProviderContext';
 
-interface QueryProviderProps {
-  authProvider: AuthProvider;
-  children: React.Component;
+interface QueryProviderProps extends QueryProviderContextType {
+  children: React.ReactNode;
 }
 
-const QueryProvider = ({
-  authProvider,
-  children,
-}: QueryProviderProps): JSX.Element => {
-  return (
-    <QueryContext.Provider
-      value={{
-        authProvider,
-      }}
-    >
-      {children}
-    </QueryContext.Provider>
-  );
-};
+const QueryProvider = (
+  {
+    dataProvider,
+    permissions,
+    children,
+  }: QueryProviderProps
+): JSX.Element => (
+  <QueryProviderContext.Provider
+    value={{
+      dataProvider,
+      permissions,
+    }}
+  >
+    {children}
+  </QueryProviderContext.Provider>
+);
 
 export default QueryProvider;
