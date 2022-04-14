@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaginationMeta } from '../types/PaginationMeta';
+import { PaginationMeta } from '../../types/PaginationMeta';
 
 interface DataProvider {
   getItems: (data: any) => any[];
