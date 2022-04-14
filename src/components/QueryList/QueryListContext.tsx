@@ -1,8 +1,8 @@
 import React from 'react';
-import { PaginationMeta } from '../QueryListProvider/QueryListProvider';
+import { PaginationMeta } from '../../types/PaginationMeta';
 import { Filters } from './useQueryList';
 
-interface QueryListContextType {
+export interface QueryListContextType {
   // fetched data
   /* eslint-disable @typescript-eslint/no-explicit-any */
   items: any[] | null;
