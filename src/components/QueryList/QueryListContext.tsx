@@ -1,5 +1,5 @@
 import React from 'react';
-import { PaginationMeta } from '../../types/PaginationMeta';
+import { PaginationMeta } from '../QueryProvider/QueryProviderContext';
 import { Filters } from './useQueryList';
 
 export interface QueryListContextType {
@@ -12,10 +12,7 @@ export interface QueryListContextType {
   //filtering
   filterValues?: Filters; // a dictionary of filter values, e.g. { title: 'lorem', nationality: 'fr' }
   setFilterValues?: (newFilterValues: Filters) => void;
-  //pagination
   paginationMeta?: PaginationMeta;
-  setPage: (newPage: number) => void;
-  setPerPage: (newPerPage: number) => void;
   refetch: (
     filters: Filters,
     pagination: {
@@ -27,8 +24,6 @@ export interface QueryListContextType {
 
 const QueryListContext = React.createContext<QueryListContextType>({
   refetch: () => undefined,
-  setPage: () => undefined,
-  setPerPage: () => undefined,
   items: null,
   loading: false,
   error: null,

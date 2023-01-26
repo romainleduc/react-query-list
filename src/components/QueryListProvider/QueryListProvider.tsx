@@ -5,80 +5,44 @@ import { PaginationPayload } from '../QueryPagination/useQueryPagination';
 import QueryProviderContext from '../QueryProvider/QueryProviderContext';
 
 interface QueryListProviderProps {
-  onQueryChange: (filters: Filters, pagination?: PaginationPayload) => void;
+  enableReinitialize?: boolean;
+  onQueryFilterChange: (filters: Filters, setQueryFilterValues?: (newFilterValues: Filters) => void) => void;
   data: any[];
   error: any;
   response: any;
   loading: boolean;
   filters?: Filters;
-  pagination?: PaginationPayload;
   children?: any;
-  paginationDisabled?: boolean;
   refetch: (filters: Filters, pagination: PaginationPayload) => void;
 }
 
 const QueryListProvider = ({
-  onQueryChange,
+  enableReinitialize,
+  onQueryFilterChange,
   refetch,
-  paginationDisabled,
   data,
   error,
   loading,
-  pagination,
   filters = {},
   children,
 }: QueryListProviderProps): JSX.Element => {
   const { dataProvider } = React.useContext(QueryProviderContext);
-  const { page, perPage } = pagination || { page: 1, perPage: 15 };
   const {
     queryFilterValues,
     setQueryFilterValues,
-    pagination: queryPagination,
-  } = useQueryList(
-    {
-      page,
-      perPage,
-    },
-    filters
-  );
+  } = useQueryList(filters);
 
   React.useEffect(() => {
-    if (page !== 1) {
-      setPage(1);
+    if (enableReinitialize) {
+      setQueryFilterValues(filters);
     }
-  }, [queryFilterValues]);
-
-  const setPage = (newPage: number) => {
-    if (!paginationDisabled) {
-      queryPagination.setPage(newPage);
-      onQueryChange(queryFilterValues || {}, {
-        page: newPage,
-        perPage,
-      });
-    }
-  };
-
-  const setPerPage = (newPerPage: number) => {
-    if (!paginationDisabled) {
-      queryPagination.setPerPage(newPerPage);
-      onQueryChange(queryFilterValues || {}, {
-        page,
-        perPage: newPerPage,
-      });
-    }
-  };
+  }, [filters, enableReinitialize]);
 
   const setFilterValues = (newFilterValues: Filters) => {
     if (setQueryFilterValues) {
-      setQueryFilterValues(newFilterValues);
-      onQueryChange(
+      onQueryFilterChange(
         newFilterValues,
-        !paginationDisabled
-          ? {
-              page: queryPagination.page,
-              perPage: queryPagination.perPage,
-            }
-          : undefined
+        setQueryFilterValues,
       );
     }
   };
@@ -91,8 +55,6 @@ const QueryListProvider = ({
         paginationMeta: data ? dataProvider.getPaginationMeta(data): undefined,
         loading,
         error,
-        setPage,
-        setPerPage,
         filterValues: queryFilterValues,
         setFilterValues,
       }}
