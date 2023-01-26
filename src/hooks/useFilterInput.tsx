@@ -3,12 +3,13 @@ import { QueryListContext } from '../components/QueryList';
 
 interface UseFilterInput {
   defaultValue?: string | number | readonly string[];
+  defaultChecked?: boolean;
   onChange?: (eventOrValue: React.ChangeEvent<HTMLInputElement> | any) => void;
   source: string;
-  type?: HTMLInputTypeAttribute
+  type?: HTMLInputTypeAttribute;
 }
 
-const useFilterInput = ({ defaultValue = '', onChange, source, type }: UseFilterInput) => {
+const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, source, type }: UseFilterInput) => {
   const { setFilterValues, filterValues } = useContext(QueryListContext);
 
   const isCheckedValue = () => {
@@ -44,8 +45,18 @@ const useFilterInput = ({ defaultValue = '', onChange, source, type }: UseFilter
     });
   }
 
+  const getValue = () => {
+    const value = filterValues?.[source];
+
+    if (isCheckedValue()) {
+      return { checked: value || defaultChecked }
+    }
+
+    return  { value: value || defaultValue };
+  }
+
   return {
-    [isCheckedValue() ? 'checked': 'value']: filterValues?.[source] || defaultValue,
+    ...getValue(),
     onChange: handleChange,
   }
 }

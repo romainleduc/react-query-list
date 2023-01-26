@@ -14,12 +14,14 @@ const QueryFilterInput = (
     onChange,
     source,
     component = 'input',
+    defaultChecked = false,
     type,
     ...other
   }: QueryFilterInputProps
 ) => {
   const inputProps = useFilterInput({
     defaultValue,
+    defaultChecked,
     onChange,
     source,
     type,
