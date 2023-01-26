@@ -14,6 +14,7 @@ const QueryFilterInput = (
     onChange,
     source,
     component = 'input',
+    type,
     ...other
   }: QueryFilterInputProps
 ) => {
@@ -21,6 +22,7 @@ const QueryFilterInput = (
     defaultValue,
     onChange,
     source,
+    type,
   });
 
   return React.createElement(component, { ...inputProps, ...other });
