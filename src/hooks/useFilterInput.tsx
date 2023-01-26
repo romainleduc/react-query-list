@@ -22,7 +22,7 @@ const useFilterInput = ({ defaultValue = '', onChange, source, type }: UseFilter
 
     let newValue;
 
-    if (!eventOrValue.target) {
+    if (!eventOrValue || !eventOrValue.target) {
       newValue = eventOrValue;
     } else if (type === 'checkbox' || type === 'radio') {
       newValue = eventOrValue.target.checked;
