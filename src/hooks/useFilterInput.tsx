@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, useContext } from 'react';
+import React, { HTMLInputTypeAttribute, useContext } from 'react';
 import { QueryListContext } from '../components/QueryList';
 
 interface UseFilterInput {
@@ -45,18 +45,9 @@ const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, s
     });
   }
 
-  const getValue = () => {
-    const value = filterValues?.[source];
-
-    if (isCheckedValue()) {
-      return { checked: value || defaultChecked }
-    }
-
-    return  { value: value || defaultValue };
-  }
-
   return {
-    ...getValue(),
+    value: !isCheckedValue() && (filterValues?.[source] || defaultValue),
+    checked: isCheckedValue() && (Boolean(filterValues?.[source]) || defaultChecked),
     onChange: handleChange,
   }
 }

@@ -8,7 +8,7 @@ export interface PaginationMeta {
 }
 
 interface DataProvider {
-  getItems: (data: any) => any[];
+  getItems: (data: any, name: string) => any[];
   getPaginationMeta: (data: any) => PaginationMeta;
 }
 

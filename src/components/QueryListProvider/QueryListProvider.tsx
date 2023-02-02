@@ -5,6 +5,7 @@ import { PaginationPayload } from '../QueryPagination/useQueryPagination';
 import QueryProviderContext from '../QueryProvider/QueryProviderContext';
 
 interface QueryListProviderProps {
+  name?: string;
   enableReinitialize?: boolean;
   onQueryFilterChange: (filters: Filters, setQueryFilterValues?: (newFilterValues: Filters) => void) => void;
   data: any[];
@@ -17,6 +18,7 @@ interface QueryListProviderProps {
 }
 
 const QueryListProvider = ({
+  name="data",
   enableReinitialize,
   onQueryFilterChange,
   refetch,
@@ -51,7 +53,7 @@ const QueryListProvider = ({
     <QueryListContext.Provider
       value={{
         refetch,
-        items: data ? dataProvider.getItems(data): [],
+        items: data ? dataProvider.getItems(data, name): [],
         paginationMeta: data ? dataProvider.getPaginationMeta(data): undefined,
         loading,
         error,
