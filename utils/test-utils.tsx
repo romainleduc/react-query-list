@@ -1,6 +1,6 @@
 import React from 'react';
-import '@testing-library/jest-dom/extend-expect';
 import { QueryListProvider } from '../src/components/QueryListProvider';
+import '@testing-library/jest-dom/extend-expect';
 
 const queryListProviderWrapper = (
   {
@@ -12,7 +12,8 @@ const queryListProviderWrapper = (
     loading,
     refetch,
     filters,
-    enableReinitialize
+    enableReinitialize,
+    disableTruthy
   }: any) => (
   <QueryListProvider
     onQueryFilterChange={onQueryFilterChange}
@@ -23,6 +24,7 @@ const queryListProviderWrapper = (
     refetch={refetch}
     filters={filters}
     enableReinitialize={enableReinitialize}
+    disableTruthy={disableTruthy}
   >
     {children}
   </QueryListProvider>

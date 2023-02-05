@@ -4,20 +4,22 @@ import useQueryList, { Filters } from '../QueryList/useQueryList';
 import { PaginationPayload } from '../QueryPagination/useQueryPagination';
 import QueryProviderContext from '../QueryProvider/QueryProviderContext';
 
-interface QueryListProviderProps {
+export interface QueryListProviderProps {
   name?: string;
+  disableTruthy?: boolean;
   enableReinitialize?: boolean;
   onQueryFilterChange: (filters: Filters, setQueryFilterValues?: (newFilterValues: Filters) => void) => void;
   data: any[];
   error: any;
-  response: any;
+  response?: any;
   loading: boolean;
   filters?: Filters;
   children?: any;
-  refetch: (filters: Filters, pagination: PaginationPayload) => void;
+  refetch?: (filters: Filters, pagination: PaginationPayload) => void;
 }
 
 const QueryListProvider = ({
+  disableTruthy,
   name="data",
   enableReinitialize,
   onQueryFilterChange,
@@ -42,6 +44,14 @@ const QueryListProvider = ({
 
   const setFilterValues = (newFilterValues: Filters) => {
     if (setQueryFilterValues) {
+      if (!disableTruthy) {
+        Object.keys(newFilterValues).forEach((key) => {
+          if (!newFilterValues[key]) {
+            delete newFilterValues[key];
+          }
+        })
+      }
+
       onQueryFilterChange(
         newFilterValues,
         setQueryFilterValues,

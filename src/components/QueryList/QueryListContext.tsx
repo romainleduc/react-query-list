@@ -13,7 +13,7 @@ export interface QueryListContextType {
   filterValues?: Filters; // a dictionary of filter values, e.g. { title: 'lorem', nationality: 'fr' }
   setFilterValues?: (newFilterValues: Filters) => void;
   paginationMeta?: PaginationMeta;
-  refetch: (
+  refetch?: (
     filters: Filters,
     pagination: {
       page: number;
