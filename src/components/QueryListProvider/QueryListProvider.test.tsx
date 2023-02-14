@@ -22,6 +22,30 @@ describe('QueryListProvider', () => {
     expect(mockCallback).toHaveBeenCalledTimes(1);
     expect(mockCallback.mock.calls[0][0]).toEqual({ brand: 'apple' });
   });
+
+  test('The onQueryFilterChange callback should be able to update the context', () => {
+    const mockCallback = jest.fn((filters, setFilters) => setFilters(filters));
+    const { getByText } = render(
+      <QueryListProvider
+        data={[]}
+        error={false}
+        loading={false}
+        onQueryFilterChange={mockCallback}
+        filters={{}}
+      >
+        {({ filterValues, setFilterValues }: QueryListContextType) => (
+          <>
+            <span>{`Brand: ${filterValues?.brand || 'null'}`}</span>
+            <button onClick={() => setFilterValues?.({ brand: 'apple' })}>Filter</button>
+          </>
+        )}
+      </QueryListProvider>,
+    )
+  
+    expect(screen.getByText(/^Brand:/).textContent).toBe('Brand: null');
+    fireEvent.click(getByText('Filter'))
+    expect(screen.getByText(/^Brand:/).textContent).toBe('Brand: apple');
+  });
   
   test('The setFilterValues method should remove filters that do not have a truthy value', () => {
     const mockCallback = jest.fn();

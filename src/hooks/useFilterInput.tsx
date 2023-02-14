@@ -7,9 +7,10 @@ interface UseFilterInput {
   onChange?: (eventOrValue: React.ChangeEvent<HTMLInputElement> | any) => void;
   source: string;
   type?: HTMLInputTypeAttribute;
+  value?: any;
 }
 
-const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, source, type }: UseFilterInput) => {
+const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, source, type, value }: UseFilterInput) => {
   const { setFilterValues, filterValues } = useContext(QueryListContext);
 
   const isCheckedValue = () => {
@@ -46,7 +47,8 @@ const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, s
   }
 
   return {
-    value: !isCheckedValue() && (filterValues?.[source] || defaultValue),
+    name: source,
+    value: value || filterValues?.[source] || defaultValue,
     checked: isCheckedValue() && (Boolean(filterValues?.[source]) || defaultChecked),
     onChange: handleChange,
   }
