@@ -14,7 +14,6 @@ const useQueryFilter = (
   const handleFilterValues = useCallback(
     (newFilterValues: Filters): void => {
       setFilterValues({
-        ...filterValues,
         ...newFilterValues,
       });
     },

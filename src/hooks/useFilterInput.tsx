@@ -23,8 +23,9 @@ const useFilterInput = ({ defaultValue = '', onChange, source }: UseFilterInput)
     }
 
     let newValue;
-
+    
     if (!eventOrValue || !eventOrValue.target) {
+      console.log('PASSE ICI ???', eventOrValue, typeof eventOrValue);
       newValue = eventOrValue;
     } else {
       newValue = eventOrValue.target.value;
