@@ -10,16 +10,8 @@ interface UseFilterInput {
   value?: any;
 }
 
-const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, source, type, value }: UseFilterInput) => {
+const useFilterInput = ({ defaultValue = '', onChange, source }: UseFilterInput) => {
   const { setFilterValues, filterValues } = useContext(QueryListContext);
-
-  const isCheckedValue = () => {
-    if (type) {
-      return ['checkbox', 'radio'].includes(type);
-    }
-
-    return false;
-  }
 
   const handleChange = (eventOrValue: React.ChangeEvent<HTMLInputElement> | any) => {
     if (onChange) {
@@ -34,8 +26,6 @@ const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, s
 
     if (!eventOrValue || !eventOrValue.target) {
       newValue = eventOrValue;
-    } else if (isCheckedValue()) {
-      newValue = eventOrValue.target.checked;
     } else {
       newValue = eventOrValue.target.value;
     }
@@ -48,8 +38,7 @@ const useFilterInput = ({ defaultValue = '', defaultChecked = false, onChange, s
 
   return {
     name: source,
-    value: value || filterValues?.[source] || defaultValue,
-    checked: isCheckedValue() && (Boolean(filterValues?.[source]) || defaultChecked),
+    value: filterValues?.[source] || defaultValue,
     onChange: handleChange,
   }
 }
