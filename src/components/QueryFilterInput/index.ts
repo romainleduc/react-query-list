@@ -1,1 +1,1 @@
-export { default as QueryFilterInput } from './QueryFlterInput';
+export { default as QueryFilterInput } from './QueryFilterInput';

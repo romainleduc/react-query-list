@@ -10,7 +10,7 @@ interface UseFilterInput {
   value?: any;
 }
 
-const useFilterInput = ({ defaultValue = '', onChange, source }: UseFilterInput) => {
+const useFilterInput = ({ defaultValue = '', onChange, source, type }: UseFilterInput) => {
   const { setFilterValues, filterValues } = useContext(QueryListContext);
 
   const handleChange = (eventOrValue: React.ChangeEvent<HTMLInputElement> | any) => {
@@ -25,7 +25,6 @@ const useFilterInput = ({ defaultValue = '', onChange, source }: UseFilterInput)
     let newValue;
     
     if (!eventOrValue || !eventOrValue.target) {
-      console.log('PASSE ICI ???', eventOrValue, typeof eventOrValue);
       newValue = eventOrValue;
     } else {
       newValue = eventOrValue.target.value;
@@ -38,6 +37,7 @@ const useFilterInput = ({ defaultValue = '', onChange, source }: UseFilterInput)
   }
 
   return {
+    type,
     name: source,
     value: filterValues?.[source] || defaultValue,
     onChange: handleChange,
