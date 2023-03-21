@@ -1,6 +1,6 @@
 {
   "name": "rct-query-list",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "React-query-list displays a list of records fetched from the API, and allows users to filter, sort, select, and paginate the records",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
