@@ -1,7 +1,6 @@
 import React from 'react';
 import QueryListContext from '../QueryList/QueryListContext';
 import useQueryList, { Filters } from '../QueryList/useQueryList';
-import { PaginationPayload } from '../QueryPagination/useQueryPagination';
 import QueryProviderContext from '../QueryProvider/QueryProviderContext';
 
 export interface QueryListProviderProps {
@@ -18,7 +17,7 @@ export interface QueryListProviderProps {
   loading: boolean;
   filters?: Filters;
   children?: any;
-  refetch?: (filters: Filters, pagination: PaginationPayload) => void;
+  refetch?: (filters: Filters) => void;
 }
 
 const QueryListProvider = ({

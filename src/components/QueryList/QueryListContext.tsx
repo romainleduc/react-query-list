@@ -14,11 +14,7 @@ export interface QueryListContextType {
   setFilterValues?: (newFilterValues: Filters) => void;
   paginationMeta?: PaginationMeta;
   refetch?: (
-    filters: Filters,
-    pagination: {
-      page: number;
-      perPage: number;
-    }
+    filters: Filters
   ) => void;
 }
 
