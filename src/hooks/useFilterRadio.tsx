@@ -23,7 +23,7 @@ const useFilterRadio = ({ onChange, source, value }: UseFilterRadioProps) => {
       ...filterValues,
       [source]: event.target.value,
     });
-  }
+  };
 
   return {
     type: 'radio',
@@ -31,7 +31,7 @@ const useFilterRadio = ({ onChange, source, value }: UseFilterRadioProps) => {
     value,
     checked: filterValues?.[source] === value,
     onChange: handleChange,
-  }
-}
+  };
+};
 
 export default useFilterRadio;

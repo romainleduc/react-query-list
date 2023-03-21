@@ -8,7 +8,12 @@ interface UseFilterButtonProps {
   source: string;
 }
 
-const useFilterButton = ({ value, multiple, onClick, source }: UseFilterButtonProps) => {
+const useFilterButton = ({
+  value,
+  multiple,
+  onClick,
+  source,
+}: UseFilterButtonProps) => {
   const { setFilterValues, filterValues } = React.useContext(QueryListContext);
 
   const isSelected = (): boolean => {
@@ -23,7 +28,7 @@ const useFilterButton = ({ value, multiple, onClick, source }: UseFilterButtonPr
     }
 
     return filterValue === value;
-  }
+  };
 
   const handleClick = (event: any) => {
     if (onClick) {
@@ -48,24 +53,23 @@ const useFilterButton = ({ value, multiple, onClick, source }: UseFilterButtonPr
 
       setFilterValues({
         ...filterValues,
-        [source]: isSelected() ? filterValue.filter((itemValue: any) => itemValue !== value):  [
-          ...filterValue,
-          value
-        ],
+        [source]: isSelected()
+          ? filterValue.filter((itemValue: any) => itemValue !== value)
+          : [...filterValue, value],
       });
     } else {
       setFilterValues({
         ...filterValues,
-        [source]: isSelected() ? undefined: value,
+        [source]: isSelected() ? undefined : value,
       });
     }
-  }
+  };
 
   return {
     value,
     onClick: handleClick,
     selected: isSelected(),
-  }
-}
+  };
+};
 
 export default useFilterButton;

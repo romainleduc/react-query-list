@@ -8,7 +8,10 @@ export interface QueryListProviderProps {
   name?: string;
   disableTruthy?: boolean;
   enableReinitialize?: boolean;
-  onQueryFilterChange: (filters: Filters, setQueryFilterValues?: (newFilterValues: Filters) => void) => void;
+  onQueryFilterChange: (
+    filters: Filters,
+    setQueryFilterValues?: (newFilterValues: Filters) => void
+  ) => void;
   data: any[];
   error: any;
   response?: any;
@@ -20,7 +23,7 @@ export interface QueryListProviderProps {
 
 const QueryListProvider = ({
   disableTruthy,
-  name="data",
+  name = 'data',
   enableReinitialize,
   onQueryFilterChange,
   refetch,
@@ -31,10 +34,7 @@ const QueryListProvider = ({
   children,
 }: QueryListProviderProps): JSX.Element => {
   const { dataProvider } = React.useContext(QueryProviderContext);
-  const {
-    queryFilterValues,
-    setQueryFilterValues,
-  } = useQueryList(filters);
+  const { queryFilterValues, setQueryFilterValues } = useQueryList(filters);
 
   React.useEffect(() => {
     if (enableReinitialize) {
@@ -49,13 +49,10 @@ const QueryListProvider = ({
           if (!newFilterValues[key]) {
             delete newFilterValues[key];
           }
-        })
+        });
       }
 
-      onQueryFilterChange(
-        newFilterValues,
-        setQueryFilterValues,
-      );
+      onQueryFilterChange(newFilterValues, setQueryFilterValues);
     }
   };
 
@@ -63,8 +60,8 @@ const QueryListProvider = ({
     <QueryListContext.Provider
       value={{
         refetch,
-        items: data ? dataProvider.getItems(data, name): [],
-        paginationMeta: data ? dataProvider.getPaginationMeta(data): undefined,
+        items: data ? dataProvider.getItems(data, name) : [],
+        paginationMeta: data ? dataProvider.getPaginationMeta(data) : undefined,
         loading,
         error,
         filterValues: queryFilterValues,
@@ -72,10 +69,10 @@ const QueryListProvider = ({
       }}
     >
       {typeof children === 'function' ? (
-        <QueryListContext.Consumer>
-          {children}
-        </QueryListContext.Consumer>
-      ): children}
+        <QueryListContext.Consumer>{children}</QueryListContext.Consumer>
+      ) : (
+        children
+      )}
     </QueryListContext.Provider>
   );
 };

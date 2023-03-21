@@ -28,9 +28,9 @@ const QueryProviderContext = React.createContext<QueryProviderContextType>({
         perPage,
         total,
         totalPages,
-      }
-    }
-  }
+      };
+    },
+  },
 });
 
 export default QueryProviderContext;

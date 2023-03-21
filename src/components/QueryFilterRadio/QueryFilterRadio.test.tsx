@@ -21,10 +21,14 @@ describe('QueryFilterRadio', () => {
         onQueryFilterChange={mockCallback}
         filters={{}}
       >
-        <QueryFilterRadio data-testid="category-filter-1" source="category" value="smartphones" />
-      </QueryListProvider>,
-    )
-  
+        <QueryFilterRadio
+          data-testid="category-filter-1"
+          source="category"
+          value="smartphones"
+        />
+      </QueryListProvider>
+    );
+
     expect(getByTestId('category-filter-1')).toHaveAttribute('type', 'radio');
   });
 
@@ -39,9 +43,9 @@ describe('QueryFilterRadio', () => {
         filters={{}}
       >
         <QueryFilterRadio source="category" value="smartphones" />
-      </QueryListProvider>,
-    )
-  
+      </QueryListProvider>
+    );
+
     expect(container.querySelector('input')).toBeInTheDocument();
   });
 
@@ -54,16 +58,23 @@ describe('QueryFilterRadio', () => {
         loading={false}
         onQueryFilterChange={mockCallback}
         filters={{
-          category: 'smartphones'
+          category: 'smartphones',
         }}
       >
-        <QueryFilterRadio component={CustomInput} source="category" value="smartphones" />
-      </QueryListProvider>,
-    )
-  
+        <QueryFilterRadio
+          component={CustomInput}
+          source="category"
+          value="smartphones"
+        />
+      </QueryListProvider>
+    );
+
     expect(getByText('My custom input')).toBeInTheDocument();
     expect(container.querySelector('input')).toHaveAttribute('type', 'radio');
-    expect(container.querySelector('input')).toHaveAttribute('value', 'smartphones');
+    expect(container.querySelector('input')).toHaveAttribute(
+      'value',
+      'smartphones'
+    );
     expect(container.querySelector('input')).toBeChecked();
   });
 
@@ -77,10 +88,14 @@ describe('QueryFilterRadio', () => {
         onQueryFilterChange={mockCallback}
         filters={{}}
       >
-        <QueryFilterRadio data-testid="category-filter-1" source="category" value="smartphones" />
-      </QueryListProvider>,
-    )
-  
+        <QueryFilterRadio
+          data-testid="category-filter-1"
+          source="category"
+          value="smartphones"
+        />
+      </QueryListProvider>
+    );
+
     expect(getByTestId('category-filter-1')).not.toBeChecked();
     fireEvent.click(getByTestId('category-filter-1'));
     expect(getByTestId('category-filter-1')).toBeChecked();
@@ -96,11 +111,19 @@ describe('QueryFilterRadio', () => {
         onQueryFilterChange={mockCallback}
         filters={{}}
       >
-        <QueryFilterRadio data-testid="category-filter-1" source="category" value="smartphones" />
-        <QueryFilterRadio data-testid="category-filter-2" source="category" value="laptop" />
-      </QueryListProvider>,
-    )
-  
+        <QueryFilterRadio
+          data-testid="category-filter-1"
+          source="category"
+          value="smartphones"
+        />
+        <QueryFilterRadio
+          data-testid="category-filter-2"
+          source="category"
+          value="laptop"
+        />
+      </QueryListProvider>
+    );
+
     expect(getByTestId('category-filter-1')).not.toBeChecked();
     expect(getByTestId('category-filter-2')).not.toBeChecked();
     fireEvent.click(getByTestId('category-filter-1'));

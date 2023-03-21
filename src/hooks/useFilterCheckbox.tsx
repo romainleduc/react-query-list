@@ -7,7 +7,11 @@ interface UseFilterCheckboxProps {
   name: string;
 }
 
-const useFilterCheckbox = ({ onChange, source, name }: UseFilterCheckboxProps) => {
+const useFilterCheckbox = ({
+  onChange,
+  source,
+  name,
+}: UseFilterCheckboxProps) => {
   const { setFilterValues, filterValues } = useContext(QueryListContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +30,7 @@ const useFilterCheckbox = ({ onChange, source, name }: UseFilterCheckboxProps) =
     }
 
     if (!event.target.checked) {
-      filterValue = filterValue.filter(name => name !== event.target.name);
+      filterValue = filterValue.filter((name) => name !== event.target.name);
     } else {
       filterValue.push(event.target.name);
     }
@@ -35,14 +39,14 @@ const useFilterCheckbox = ({ onChange, source, name }: UseFilterCheckboxProps) =
       ...filterValues,
       [source]: filterValue,
     });
-  }
+  };
 
   return {
     type: 'checkbox',
     name,
     checked: Boolean(filterValues?.[source]?.includes(name)),
     onChange: handleChange,
-  }
-}
+  };
+};
 
 export default useFilterCheckbox;
