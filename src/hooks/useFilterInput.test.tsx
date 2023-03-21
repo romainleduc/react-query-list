@@ -46,7 +46,7 @@ test('The default value should not override the provider one', () => {
   expect(result.current.value).toBe("smartphones");
 });
 
-test('The default value should not override the provider one', () => {
+test('The value should update with the context', () => {
   const mockCallback = jest.fn((filters, setFilters) => setFilters(filters));
   const { result } = renderHook(() => useFilterInput(
     {
@@ -70,7 +70,7 @@ test('The default value should not override the provider one', () => {
   expect(result.current.value).toBe('smartphones');
 });
 
-test('The default value should not override the provider one', () => {
+test('The onChange should call the callback onQueryFilterChange by modifying only the filter concerned', () => {
   const mockCallback = jest.fn();
   const { result } = renderHook(() => useFilterInput(
     {

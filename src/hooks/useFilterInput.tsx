@@ -4,7 +4,7 @@ import { QueryListContext } from '../components/QueryList';
 interface UseFilterInput {
   defaultValue?: string | number | readonly string[];
   defaultChecked?: boolean;
-  onChange?: (eventOrValue: React.ChangeEvent<HTMLInputElement> | any) => void;
+  onChange?: (eventOrValue: React.ChangeEvent<HTMLInputElement> | any, value?: any) => void;
   source: string;
   type?: HTMLInputTypeAttribute;
   value?: any;
@@ -13,9 +13,9 @@ interface UseFilterInput {
 const useFilterInput = ({ defaultValue = '', onChange, source, type }: UseFilterInput) => {
   const { setFilterValues, filterValues } = useContext(QueryListContext);
 
-  const handleChange = (eventOrValue: React.ChangeEvent<HTMLInputElement> | any) => {
+  const handleChange = (eventOrValue: React.ChangeEvent<HTMLInputElement> | any, value: any) => {
     if (onChange) {
-      onChange(eventOrValue);
+      onChange(eventOrValue, value);
     }
 
     if (!setFilterValues) {
@@ -24,7 +24,10 @@ const useFilterInput = ({ defaultValue = '', onChange, source, type }: UseFilter
 
     let newValue;
     
-    if (!eventOrValue || !eventOrValue.target) {
+    if (value) {
+      newValue = value;
+    }
+    else if (!eventOrValue || !eventOrValue.target) {
       newValue = eventOrValue;
     } else {
       newValue = eventOrValue.target.value;
