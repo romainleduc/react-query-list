@@ -19,11 +19,7 @@ const useFilterCheckbox = ({
       onChange(event);
     }
 
-    if (!setFilterValues) {
-      return;
-    }
-
-    let filterValue = filterValues?.[source] || [];
+    let filterValue = filterValues[source] || [];
 
     if (!Array.isArray(filterValue)) {
       return;
@@ -44,7 +40,7 @@ const useFilterCheckbox = ({
   return {
     type: 'checkbox',
     name,
-    checked: Boolean(filterValues?.[source]?.includes(name)),
+    checked: Boolean(filterValues[source]?.includes(name)),
     onChange: handleChange,
   };
 };

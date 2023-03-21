@@ -17,7 +17,7 @@ const useFilterButton = ({
   const { setFilterValues, filterValues } = React.useContext(QueryListContext);
 
   const isSelected = (): boolean => {
-    const filterValue = filterValues?.[source];
+    const filterValue = filterValues[source];
 
     if (!filterValue) {
       return false;
@@ -35,12 +35,8 @@ const useFilterButton = ({
       onClick(event);
     }
 
-    if (!setFilterValues) {
-      return;
-    }
-
     if (multiple) {
-      let filterValue = filterValues?.[source];
+      let filterValue = filterValues[source];
 
       if (filterValue && !Array.isArray(filterValue)) {
         console.warn('Value should be array when multiple is true');

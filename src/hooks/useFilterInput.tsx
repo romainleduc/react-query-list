@@ -29,10 +29,6 @@ const useFilterInput = ({
       onChange(eventOrValue, value);
     }
 
-    if (!setFilterValues) {
-      return;
-    }
-
     let newValue;
 
     if (value) {

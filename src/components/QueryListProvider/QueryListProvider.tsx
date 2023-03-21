@@ -9,7 +9,7 @@ export interface QueryListProviderProps {
   enableReinitialize?: boolean;
   onQueryFilterChange: (
     filters: Filters,
-    setQueryFilterValues?: (newFilterValues: Filters) => void
+    setQueryFilterValues: (newFilterValues: Filters) => void
   ) => void;
   data: any[];
   error: any;
@@ -42,17 +42,15 @@ const QueryListProvider = ({
   }, [filters, enableReinitialize]);
 
   const setFilterValues = (newFilterValues: Filters) => {
-    if (setQueryFilterValues) {
-      if (!disableTruthy) {
-        Object.keys(newFilterValues).forEach((key) => {
-          if (!newFilterValues[key]) {
-            delete newFilterValues[key];
-          }
-        });
-      }
-
-      onQueryFilterChange(newFilterValues, setQueryFilterValues);
+    if (!disableTruthy) {
+      Object.keys(newFilterValues).forEach((key) => {
+        if (!newFilterValues[key]) {
+          delete newFilterValues[key];
+        }
+      });
     }
+
+    onQueryFilterChange(newFilterValues, setQueryFilterValues);
   };
 
   return (

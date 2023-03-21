@@ -15,10 +15,6 @@ const useFilterRadio = ({ onChange, source, value }: UseFilterRadioProps) => {
       onChange(event);
     }
 
-    if (!setFilterValues) {
-      return;
-    }
-
     setFilterValues({
       ...filterValues,
       [source]: event.target.value,
@@ -29,7 +25,7 @@ const useFilterRadio = ({ onChange, source, value }: UseFilterRadioProps) => {
     type: 'radio',
     name: source,
     value,
-    checked: filterValues?.[source] === value,
+    checked: filterValues[source] === value,
     onChange: handleChange,
   };
 };
