@@ -11,6 +11,7 @@ interface UseFilterInput {
   source: string;
   type?: HTMLInputTypeAttribute;
   value?: any;
+  transformValue?: (eventOrValue: React.ChangeEvent<HTMLInputElement> | any, value: any) => any;
 }
 
 const useFilterInput = ({
@@ -18,6 +19,7 @@ const useFilterInput = ({
   onChange,
   source,
   type,
+  transformValue,
 }: UseFilterInput) => {
   const { setFilterValues, filterValues } = useContext(QueryListContext);
 
@@ -31,8 +33,8 @@ const useFilterInput = ({
 
     let newValue;
 
-    if (value) {
-      newValue = value;
+    if (transformValue) {
+      newValue = transformValue(eventOrValue, value);
     } else if (!eventOrValue || !eventOrValue.target) {
       newValue = eventOrValue;
     } else {
